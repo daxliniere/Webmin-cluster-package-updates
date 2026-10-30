@@ -2,8 +2,6 @@
 
 Public distribution. Filters scope bulk actions but not selection storage. Includes source and regression tests. On a new installation configure your own Webmin remote server allow-list.
 
-# Cluster Package Updates v0.1.15
-
 A Webmin cluster module providing a package-by-host update matrix, selected-update APT simulations, explicit per-host approval and execution tracking. Works through existing Webmin RPC connections.
 
 ## Installation
