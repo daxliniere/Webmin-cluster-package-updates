@@ -6,11 +6,6 @@ Public distribution. Filters scope bulk actions but not selection storage. Inclu
 
 A Webmin cluster module providing a package-by-host update matrix, selected-update APT simulations, explicit per-host approval and execution tracking. Works through existing Webmin RPC connections.
 
-## v0.1.15 changes
-- **Back to package matrix** now appears directly below **Refresh Status** at the top of the Cluster Update Job page.
-- Sanitised public source code and test fixtures. No site-specific host allow-list is distributed.
-- Default remote host list is empty. Configure authorised Webmin RPC targets after installing on a new server.
-
 ## Installation
 Use **Webmin > Webmin Configuration > Webmin Modules** to install the `.wbm.gz` file. For an existing installation, back up `/etc/webmin/cluster-package-updates/config` first and confirm your approved hosts remain configured afterward. The installer ships with blank *defaults* and does not contain your addresses.
 
