@@ -1,0 +1,6 @@
+desc=Cluster Package Updates
+category=cluster
+os_support=*-linux
+depends=servers package-updates
+version=0.1.17
+longdesc=Fleet package update matrix with Webmin RPC APT preview, per-host approval, selective PVE mode, and per-host job status.

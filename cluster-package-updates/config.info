@@ -1,0 +1,2 @@
+include_local=Include this Webmin server (PVE)?,1,1-Yes,0-No
+targets=Approved Webmin RPC server addresses,3,Hostnames/IPs separated by spaces

@@ -1,0 +1,5 @@
+# Default configuration for fresh public installations.
+# Register remote Webmin servers and approve them in Module Configuration.
+# Never include site-specific addresses or passwords in this distribution.
+include_local=1
+targets=

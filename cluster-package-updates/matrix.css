@@ -1,0 +1,266 @@
+/* Cluster Package Updates v0.1.4: use browser/Webmin theme fonts and colors. */
+.cpu-note { opacity: .8; max-width: 85em; }
+.cpu-error { color: #b91c1c; font-weight: 600; }
+.cpu-status { margin: 1.1em 0; }
+.cpu-status summary { cursor: pointer; font-weight: 600; }
+.cpu-status-table { border-collapse: collapse; margin: .7em 0 1em; min-width: min(620px,100%); }
+.cpu-status-table th, .cpu-status-table td { padding: .5em .8em; border: 1px solid #b5b5b555; text-align: left; }
+.cpu-status-table thead { background: rgba(120,120,120,.13); }
+.cpu-matrix { border-collapse: collapse; border-spacing: 0; width: 100%; min-width: 960px; table-layout: fixed; }
+.cpu-matrix th, .cpu-matrix td { border-right: 1px solid #8884; border-bottom: 1px solid #8884; padding: 0; }
+.cpu-matrix thead th { position: sticky; top: 0; z-index: 3; background: var(--bg-color, #e5e9ed); }
+.cpu-matrix th:first-child { position: sticky; left: 0; z-index: 2; background: var(--bg-color, #e5e9ed); }
+.cpu-matrix thead th:first-child { z-index: 4; }
+.cpu-matrix td { text-align: center; }
+.cpu-matrix td.cpu-eligible label { cursor: pointer; display: flex; align-items: center; justify-content: center; height: 36px; padding: 0; margin: 0; }
+.cpu-matrix td.cpu-eligible:hover, .cpu-matrix tbody tr:hover td { background: rgba(120,140,170,.12); }
+.cpu-matrix td.cpu-sec-cell { box-shadow: inset 0 0 0 1px rgba(180,125,40,.15); }
+.cpu-matrix td.cpu-absent { color: #888; }
+.cpu-matrix .cpu-package-head { width: 355px; max-width: 355px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cpu-head-btn { appearance: none; width: 100%; border: none; border-radius: 0; padding: .7em .8em; font: inherit; font-weight: 600; color: inherit; background: transparent; cursor: pointer; text-align: center; }
+.cpu-package-btn { text-align: left; width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.cpu-head-btn:hover { background: rgba(75,120,170,.16); }
+.cpu-head-btn:focus-visible { outline: 2px solid #5286c2; outline-offset: -2px; }
+.cpu-head-btn[data-state="all"]::after { content: ' ✓'; font-size: .9em; }
+.cpu-head-btn[data-state="some"]::after { content: ' ◩'; font-size: .9em; }
+.cpu-head-btn:disabled { cursor: default; opacity: .6; }
+.cpu-system { color: #888; font-size: .75em; }
+.cpu-security { font-size: .65em; background: rgba(180,125,40,.17); border-radius: .3em; padding: .1em .3em; }
+.cpu-toolbar, .cpu-footer { display: flex; flex-wrap: wrap; gap: .75em; align-items: center; padding: 1em 0; }
+.cpu-counter { margin-left: auto; font-weight: 600; }
+.cpu-footer { justify-content: space-between; }
+.cpu-action, .cpu-primary { font: inherit; cursor: pointer; padding: .55em .9em; border-radius: .3em; border: 1px solid #8888; color: inherit; background: rgba(130,140,155,.13); }
+.cpu-primary { font-weight: 700; background: #176da9; color: white; border-color: #176da9; }
+.cpu-primary:disabled { opacity: .4; cursor: default; }
+@media (prefers-color-scheme: dark) {
+  .cpu-matrix thead th, .cpu-matrix th:first-child { background: var(--bg-color, #222c35); }
+}
+
+/* v0.1.2: paginated controls and three-state cells. */
+.cpu-candidate-version { font-weight: 400; opacity: .78; font-size: .9em; overflow-wrap: anywhere; }
+.cpu-check-icon { display: inline-flex !important; width: 18px !important; height: 18px !important; min-width: 18px !important; min-height: 18px !important; max-width: 18px !important; max-height: 18px !important; vertical-align: middle; align-items: center; justify-content: center; }
+.cpu-current { text-align: center; padding: 0 !important; }
+.cpu-legend { display: flex; flex-wrap: wrap; gap: .7em 1.4em; align-items: center; padding: .4em 0 .8em; font-size: .91em; }
+.cpu-legend span { display: inline-flex; align-items: center; gap: .35em; }
+.cpu-legend-muted { opacity: .7; }
+.cpu-pager { display: flex; gap: .4em; flex-wrap: wrap; align-items: center; padding: .7em 0; }
+.cpu-pager-count { opacity: .8; margin-right: .5em; }
+.cpu-page-link, .cpu-page-go { display: inline-flex; align-items: center; justify-content: center; padding: .35em .65em; min-width: 2.2em; border: 1px solid #8886; border-radius: .25em; color: inherit; text-decoration: none; background: rgba(120,130,150,.08); }
+.cpu-page-link:hover, .cpu-page-go:hover { background: rgba(100,140,190,.22); }
+.cpu-page-disabled { opacity: .35; cursor: default; }
+.cpu-page-form { display: inline-flex; align-items: center; gap: .45em; margin: 0 .25em; }
+.cpu-page-form input[type=number] { width: 5.2em; box-sizing: border-box; text-align: center; padding: .36em .18em; border: 1px solid #8888; border-radius: .25em; background: transparent; color: inherit; }
+.cpu-page-go { cursor: pointer; font: inherit; }
+.cpu-matrix td.cpu-absent[title="Update excluded by active filter"] { opacity: .5; }
+
+/* v0.1.3: uniform compact rows, natural page scrolling, no nested scrollbox. */
+.cpu-matrix-caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.cpu-matrix tbody tr { height: 36px !important; }
+.cpu-matrix tbody tr > th, .cpu-matrix tbody tr > td {
+  height: 36px !important; min-height: 36px !important;
+  max-height: 36px !important; padding: 0 !important;
+  box-sizing: border-box; vertical-align: middle !important;
+  line-height: 1.1 !important;
+}
+.cpu-matrix tbody tr > th { overflow: hidden; white-space: nowrap !important; }
+.cpu-matrix .cpu-package-btn {
+  display: block; height: 36px; box-sizing: border-box;
+  max-width: 100%; padding: 0 10px !important;
+  line-height: 36px !important; overflow: hidden !important;
+  white-space: nowrap !important; text-overflow: ellipsis !important;
+}
+.cpu-matrix .cpu-host-btn, .cpu-matrix .cpu-corner .cpu-head-btn {
+  height: 40px; box-sizing: border-box; line-height: 1.2;
+}
+.cpu-matrix .cpu-eligible input.cpu-cell { margin: 0 !important; }
+.cpu-matrix .cpu-host-head { white-space: nowrap; }
+.cpu-matrix .cpu-absent { font-size: .95em; }
+
+/* In fixed-layout tables, the first HEADER cell determines column width. */
+.cpu-matrix .cpu-corner { width: 355px !important; min-width: 355px !important; max-width: 355px !important; }
+
+/* v0.1.4: integrate page-size selection in the page-number form, no inner scrollbox. */
+.cpu-page-form label { display: inline-flex; align-items: center; gap: .35em; white-space: nowrap; }
+.cpu-page-size-label { margin-left: .45em; }
+.cpu-page-form select.cpu-page-size { min-width: 5em; padding: .38em .3em; border: 1px solid #8888; border-radius: .25em; background: transparent; color: inherit; font: inherit; }
+@media (max-width: 800px) { .cpu-pager { gap: .3em; } .cpu-page-size-label { margin-left: 0; } }
+
+/* v0.1.5: group search, category and related actions into one panel. */
+.cpu-filter-panel { border: 1px solid #8885; border-radius: 8px; padding: 14px 16px; margin: 1em 0; background: rgba(125,135,155,.055); }
+.cpu-filter-fields { display: grid; grid-template-columns: minmax(260px, 1.65fr) minmax(235px, 1fr); gap: 14px 18px; align-items: end; }
+.cpu-filter-field { display: flex; flex-direction: column; gap: 6px; font-weight: 600; }
+.cpu-filter-field input, .cpu-filter-field select { width: 100%; box-sizing: border-box; min-height: 34px; }
+.cpu-filter-actions { display: flex; align-items: center; gap: 8px; margin-top: 12px; }
+.cpu-review-host { margin: 10px 0; border: 1px solid #8884; padding: 10px; border-radius: 6px; }
+.cpu-review-host summary { cursor: pointer; }
+.cpu-plan-output { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 380px; overflow-y: auto; padding: 12px; background: rgba(120,130,150,.08); }
+@media (max-width: 720px) { .cpu-filter-fields { grid-template-columns: 1fr; } }
+
+/* v0.1.6: compact grouped filters, toolbar action and visible JS readiness. */
+.cpu-filter-fields { grid-template-columns: minmax(250px, 1.3fr) minmax(180px, 1fr); }
+.cpu-filter-category select { width: min(100%, 440px); }
+.cpu-filter-search input { width: min(50%, 280px) !important; max-width: 280px !important; min-width: 140px !important; }
+.cpu-filter-actions button.cpu-filter-button,
+.cpu-filter-actions button.cpu-refresh-button {
+  font: inherit; padding: .45em 1em; min-height: 34px;
+  cursor: pointer; border-radius: 5px; border: 1px solid #9a9fa8;
+  color: inherit;
+}
+.cpu-filter-actions button.cpu-filter-button { background: #d7dbe0; color: #1f2937; border-color: #aeb4ba; }
+.cpu-filter-actions button.cpu-filter-button:hover { background: #c6ccd3; }
+.cpu-filter-actions button.cpu-refresh-button { background: rgba(130,140,155,.09); }
+.cpu-filter-actions button.cpu-refresh-button:hover { background: rgba(130,140,155,.2); }
+.cpu-toolbar .cpu-primary { margin: 0; }
+.cpu-js-status { font-size: .93em; margin: 0 0 .7em; }
+.cpu-js-status.cpu-js-ready { color: #238348; font-weight: 500; opacity: .78; }
+@media (max-width: 720px) {
+ .cpu-filter-fields { grid-template-columns: 1fr; }
+ .cpu-filter-search input { width: min(100%, 280px) !important; }
+}
+
+/* v0.1.8: keep the installed-only display filter grouped with search. */
+.cpu-hide-current { display:flex; gap:.45em; align-items:center; margin-top:12px; font-weight:500; }
+.cpu-hide-current input[type=checkbox] { margin:0; }
+
+/* v0.1.9: preview progress is part of the Webmin page, no nested scrollbox. */
+#cpu-review-progress { max-width: 850px; }
+#cpu-progress-bar { display:block; width: min(100%,750px); height: 20px; margin: .5em 0; accent-color: #287dbe; }
+#cpu-progress-events { line-height: 1.65; margin: .5em 0 1em; padding-left: 1.8em; }
+#cpu-progress-count { opacity: .8; }
+
+/* v0.1.13: a constrained CSS background icon, not an inline SVG or <img>.
+   This avoids the Authentic Theme SVG size override seen in v0.1.2. */
+.cpu-filter-icon {
+  display: inline-block !important;
+  box-sizing: border-box !important;
+  width: 15px !important;
+  height: 15px !important;
+  min-width: 15px !important;
+  min-height: 15px !important;
+  max-width: 15px !important;
+  max-height: 15px !important;
+  flex: 0 0 15px !important;
+  vertical-align: middle !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 15px 15px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%236b7280' d='M3 4h18v2l-7 8v6l-4 2v-8L3 6z'/%3E%3C/svg%3E") !important;
+}
+.cpu-matrix td.cpu-filtered { font-size: 14px; }
+
+/* v0.1.13: make review completion a normal Authentic Theme link, without
+   programmatic location replacement that strips the navigation sidebar. */
+.cpu-review-link { display: inline-flex; align-items: center; padding: .5em .9em; background: #176da9; color: #fff !important; border-radius: 5px; text-decoration: none; font-weight: 600; }
+.cpu-review-link:hover { background: #125b8d; color: #fff !important; }
+.cpu-review-link[hidden] { display: none !important; }
+
+/* v0.1.13: tint only the final confirmation submit control, leaving the
+   matrix review button and other Webmin actions unchanged. The wrapper
+   targets both Webmin input and button markup across Authentic Theme builds. */
+.cpu-confirm-action { display: inline-block; margin: .4em 0; }
+.cpu-confirm-action input[type="submit"],
+.cpu-confirm-action button[type="submit"] {
+  background: #d4eadc !important;
+  background-image: none !important;
+  color: #195235 !important;
+  border: 1px solid #83b79a !important;
+  border-radius: 5px !important;
+  font-weight: 700 !important;
+  padding: .55em 1em !important;
+  cursor: pointer;
+}
+.cpu-confirm-action input[type="submit"]:hover,
+.cpu-confirm-action button[type="submit"]:hover {
+  background: #bee0cb !important;
+  border-color: #5d9d78 !important;
+}
+.cpu-confirm-action input[type="submit"]:focus-visible,
+.cpu-confirm-action button[type="submit"]:focus-visible {
+  outline: 2px solid #227548 !important;
+  outline-offset: 2px;
+}
+.cpu-confirm-action input[type="submit"]:disabled,
+.cpu-confirm-action button[type="submit"]:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+@media (prefers-color-scheme: dark) {
+  .cpu-confirm-action input[type="submit"],
+  .cpu-confirm-action button[type="submit"] {
+    background: #214a35 !important;
+    color: #def4e7 !important;
+    border-color: #548f70 !important;
+  }
+  .cpu-confirm-action input[type="submit"]:hover,
+  .cpu-confirm-action button[type="submit"]:hover {
+    background: #2d6045 !important;
+  }
+}
+
+/* v0.1.13: show actionable and blocked previews without permitting a failed
+   host to prevent independently approved, safe host updates. */
+.cpu-host-ready { color: #218148; font-weight: 700; }
+.cpu-host-blocked { color: #b13b2c; font-weight: 700; }
+.cpu-host-approval { display: block; margin: .65em 0; font-weight: 600; }
+.cpu-host-approval input[type=checkbox] { margin-right: .4em; }
+.cpu-pve-warning { border-left: 3px solid #cf9b43; padding: .35em .8em; background: rgba(220,170,65,.12); }
+
+/* v0.1.15: theme-independent blue buttons; no broad Webmin button overrides.
+   Authentic Theme ui_submit() uses a type=button proxy + a hidden submit,
+   so review.cgi now generates a real submit button with a dedicated class. */
+.cpu-confirm-action button.cpu-confirm-button,
+a.cpu-job-refresh {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: .35em !important;
+  box-sizing: border-box !important;
+  width: auto !important;
+  background: #176da9 !important;
+  background-image: none !important;
+  border: 1px solid #125d91 !important;
+  color: #fff !important;
+  border-radius: 5px !important;
+  padding: .56em 1em !important;
+  line-height: 1.35 !important;
+  font: inherit !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+}
+.cpu-confirm-action button.cpu-confirm-button:hover,
+a.cpu-job-refresh:hover {
+  background: #125b8d !important;
+  border-color: #0e4d79 !important;
+  color: #fff !important;
+}
+.cpu-confirm-action button.cpu-confirm-button:focus-visible,
+a.cpu-job-refresh:focus-visible {
+  outline: 2px solid #77a8e0 !important;
+  outline-offset: 2px !important;
+}
+.cpu-job-toolbar { margin: .45em 0 1em; }
+
+/* v0.1.15: same fixed 18px circular green tick as the update matrix;
+   failures red X, warnings orange !. Never insert a naked SVG or img. */
+.cpu-job-mark {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  min-height: 18px !important;
+  max-width: 18px !important;
+  max-height: 18px !important;
+  border-radius: 50% !important;
+  flex: 0 0 18px !important;
+  color: white !important;
+  font: bold 13px/18px Arial, sans-serif !important;
+  vertical-align: middle !important;
+  margin-right: .3em !important;
+}
+.cpu-job-mark--ok { background: #2e9f58 !important; }
+.cpu-job-mark--error { background: #c52f34 !important; }
+.cpu-job-mark--warning { background: #d98512 !important; }
